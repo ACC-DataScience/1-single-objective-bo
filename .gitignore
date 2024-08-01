@@ -3,3 +3,5 @@
 *.pyc
 .coverage
 *.egg-info/
+Assignment_1_SOBO.ipynb
+sobo_assignment_ans.py
