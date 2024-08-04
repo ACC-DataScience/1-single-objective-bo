@@ -1,4 +1,4 @@
-# 1. Single-objective BO
+# 1. Single-objective BO: Optimizing Alloy Yield Strength
 
 Perform single-objective optimization to maximize the yield strength of an alloy as a function of composition and processing conditions.
 

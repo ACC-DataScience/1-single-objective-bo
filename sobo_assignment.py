@@ -1,7 +1,7 @@
 # ======================================================================================
 # ASSIGNMENT 1: Optimizing an Alloy for Yield Strength
 
-# Your goal is to use Honegumi to develop an optimization script to help you a
+# Your assignment is to use Honegumi to develop an optimization script to help you a
 # set of parameters that maximize the yield strength of a developed alloy. Your
 # experimental budget is limited to 25 experiments. A synthetic objective
 # function has been provided that will serve as a proxy for real experimental
