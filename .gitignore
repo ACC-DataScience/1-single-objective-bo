@@ -1,7 +1,11 @@
 **/__pycache__/
 .pytest_cache/
-*.pyc
+*.py[cod]
+*$py.class
 .coverage
-*.egg-info/
-Assignment_1_SOBO.ipynb
-sobo_assignment_ans.py
+htmlcov/
+.env
+.venv
+venv/
+ENV/
+.DS_Store

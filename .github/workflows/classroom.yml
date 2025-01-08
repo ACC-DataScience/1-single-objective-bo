@@ -1,7 +1,7 @@
 name: Autograding Tests
 'on':
-- push
-- repository_dispatch
+  - push
+  - workflow_dispatch
 permissions:
   checks: write
   actions: read
@@ -11,18 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-classroom[bot]'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Single objective test suite
-      id: single-objective-test-suite
-      uses: classroom-resources/autograding-python-grader@v1
-      with:
-        timeout: 5
-        max-score: 10
-        setup-command: sudo -H pip3 install -r requirements.txt
-    - name: Autograding Reporter
-      uses: classroom-resources/autograding-grading-reporter@v1
-      env:
-        SINGLE-OBJECTIVE-TEST-SUITE_RESULTS: "${{steps.single-objective-test-suite.outputs.result}}"
-      with:
-        runners: single-objective-test-suite
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Single Objective BO test
+        id: single-objective-bo-test
+        uses: classroom-resources/autograding-python-grader@v1
+        with:
+          timeout: 10
+          max-score: 10
+          setup-command: pip install -r requirements.txt
+          test-command: pytest sobo_assignment_test.py -v
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          SINGLE-OBJECTIVE-BO-TEST_RESULTS: "${{steps.single-objective-bo-test.outputs.result}}"
+        with:
+          runners: single-objective-bo-test

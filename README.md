@@ -1,62 +1,92 @@
-# 1. Single-objective BO: Optimizing Alloy Yield Strength
+# Single-objective Bayesian Optimization: Alloy Yield Strength
 
-Perform single-objective optimization to maximize the yield strength of an alloy as a function of composition and processing conditions.
+## Overview
+This assignment focuses on using Bayesian Optimization (BO) to maximize the yield strength of an alloy by optimizing its composition and processing conditions.
 
-## The Assignment
+## Background
+The yield strength of a metal determines the point at which it begins to plastically deform. Maximizing yield strength is crucial for:
+- Aerospace applications
+- Automotive industry
+- Nautical engineering
 
-The yield strength of a metal is an important material property the determines the stregth at which a metal begins to plastically deform. Maximizing the yield strength of a material is of critical importance in furthering technological development in aerospace, automotive, and nautical applications where high performing materials are a necessity. A common method of increasing the yield strength of the metal is through the *in-situ* formation of a hard precipitate phase in the matrix. The presence of the precipitate phase inhibits the movement of planes of atoms within the metal, which is the primary mechanism of plastic deformation.
+A common strengthening mechanism is the formation of vanadium carbide precipitates, which:
+- Inhibit atomic plane movement
+- Provide thermal and chemical stability
+- Form based on specific processing conditions
 
-Vanadium carbide is a commonly sought after precipitate phase owing to its thermal and chemical stabiliy within the metal matrix. The formation of vanadium carbide can be modeled as a function of the vanadium content, the parameters of an aging process, and the processing state of a metal prior to aging. A cursory look at the steel-vanadium carbide phase diagram shows that vanadium carbide formation is stable from **1-5 wt% vanadium** in the temperature range of **500-1100C**. Common aging times within the literature suggest that aging times can vary from **0.5-24 hours** for precipitation growth. Lastly, within your research lab, you have the tools to either perform cold rolling (**CR**) or recrystallization (**RX**) of the metal prior to aging, which you suspect will have an effect on the precipitate formation.
+## Optimization Parameters
 
-Your task is to use Honegumi to develop an optimization script to help you find a set of parameters that maximize the yield strength of a developed alloy. Your experimental budget is limited to **25 experiments**. A synthetic objective function has been provided that will serve as a proxy for real experimental measurements. The individual tasks for this assignment are listed below along with some helpful tips and guides for how to approach the problem.
+| Parameter | Range | Description |
+|-----------|--------|-------------|
+| Vanadium Content | 1-5 wt% | Weight percentage of vanadium |
+| Temperature | 500-1100°C | Aging temperature |
+| Time | 0.5-24 hours | Aging duration |
+| Process | CR/RX | Cold Rolling (CR) or Recrystallization (RX) |
 
+## Example Usage
 ```python
-t = 12 # hours
+t = 12            # hours
 temperature = 800 # °C
-v_prct = 3 # weight percentage of Vanadium
-process = "RX" # recrystallization
+v_prct = 3       # weight percentage of Vanadium
+process = "RX"    # recrystallization
 ys = measure_yield_strength(t, temperature, v_prct, process)
 print(ys)
 ```
 
-### **TASK A:** Use Honegumi to set up and run the optimization problem.
+## Tasks
 
-In this problem you are expected to use [Honegumi](https://honegumi.readthedocs.io/) to generate a code template for this problem which you will then modify to meet the problem criteria. For some specific examples of this check out the [tutorials](https://honegumi.readthedocs.io/en/latest/tutorials.html) page on the Honegumi website.
+### Task A: Optimization Setup
+Use Honegumi to:
+- Generate optimization template
+- Configure parameter space
+- Set up experiment with 25-trial budget
 
-To complete this problem, you are given access to a synthetic objective function that will be used as a proxy for real experimental observations called `measure_yield_strength()`, which is stored in the `./utils.py` file. This function takes in four variables: `time`, `temperature`, `v_prct`, and `process` and returns the measured yield strength as an alloy. These are the parameters you should specify when setting up your optimization problem.
+### Task B: Parameter Optimization
+- Find optimal parameters
+- Store results in `optimal_params`
+- Record best yield strength in `optimal_yield_strength`
 
-### **TASK B:** Report the optimal parameters and associated yield strength.
+### Task C: Feature Importance
+- Use `get_feature_importances()`
+- Analyze parameter significance
+- Store results in `feature_importances`
 
-Now that you have completed the optimization, assign the optimial parameters as a dictionary to a variable named `optimal_params` and the optimal yeild strength to a variable named `optimal_yield_strength`. The default optimization scripts generated by Honegumi already provide a means of accessing these from the `AxClient()` object.
+### Task D: Model Validation
+- Perform cross-validation using `cross_validate()`
+- Calculate diagnostics with `compute_diagnostic()`
+- Record:
+  - Correlation coefficient in `corr_coeff`
+  - Root mean squared error in `rmse`
 
-### **TASK C:** Report the most important parameters for maximizing yield strength.
+### Task E: Stability Analysis
+- Analyze parameter perturbations (±3%)
+- Generate stability heatmap
+- Report minimum performance impact
 
-Use `AxClient()` object method named `get_feature_importances()` to compute the relative importance of each parameter in the optimization process. Assign the result as a string to a variable named `feature_importances`.
+## Development Setup
 
-### **TASK D:** Report the accuracy of the surrogate model.
+### Prerequisites
+- Python 3.8+
+- Required packages listed in `requirements.txt`
 
-Use the `cross_validate()` and `compute diagnostic()` functions in ax to peform cross validation with the model on the optimized dataset. From the diagnostics, pull the correlation coefficient and assign it to a variable named `corr_coeff`. Next pull the mean squared error value, convert it to root mean squared error, and assign it to a variable named `rmse`.
+### Installation
+```bash
+# Environment will be automatically set up in GitHub Codespace
+# Manual setup if needed:
+pip install -r requirements.txt
+```
 
-For specific documentation details you may consult: https://ax.dev/api/modelbridge.html#ax.modelbridge.cross_validation.compute_diagnostics
+### Testing
+```bash
+pytest
+```
 
-### **TASK E:** Compute the stability of optimal solution under parameter perturbation.
-
-In synthesis it is often challenging to hit exact values of parameters due to physical limitations and human error. Thus, it is important to understand how the optimal yield strength might change under small perturbations in the parameters. 
-
-In the context of this optimization problem it is known that the aging temperature and amount of vanadium added to a sample can deivate by up to 3% from the set parameter value in a production setting. Use the trained model to generate a heatmap of predicted yield strength within this variation range. Report the maximum difference between the optimal yield strength and minimum observed value.
-
-Using an ax model for predictions requires that the input parameter sets be wrapped in an `ObservationFeatures` object, which can be imported as:
-
-`from ax.core.observation import ObservationFeatures`
-
-For an example of how to use this, consult: https://github.com/facebook/Ax/issues/2490
-
-## Setup command
-
-See `postCreateCommand` from [`devcontainer.json`](.devcontainer/devcontainer.json).
-
-## Run command
-`pytest`
+## Documentation
+- [Honegumi Documentation](https://honegumi.readthedocs.io)
+- [Honegumi Tutorials](https://honegumi.readthedocs.io/en/latest/tutorials.html)
+- [Ax Model Bridge Documentation](https://ax.dev/api/modelbridge.html#ax.modelbridge.cross_validation.compute_diagnostics)
 
 ## Notes
-- pip's install path is not included in the PATH var by default, so without installing via `sudo -H`, pytest would be unaccessible.
+- The objective function `measure_yield_strength()` is provided in `utils.py`
+- Limited to 25 experimental trials
+- Consider practical parameter variations in production settings

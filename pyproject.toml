@@ -1,2 +1,7 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["sobo_assignment_test.py"]
+python_files = ["sobo_assignment_test.py"]

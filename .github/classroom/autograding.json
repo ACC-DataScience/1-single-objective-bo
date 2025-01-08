@@ -1,0 +1,39 @@
+{
+  "tests": [
+    {
+      "name": "1. Optimization Setup",
+      "setup": "pip install -r requirements.txt",
+      "run": "pytest sobo_assignment_test.py::test_task_a -v",
+      "points": 2,
+      "timeout": 10
+    },
+    {
+      "name": "2. Parameter Optimization",
+      "setup": "pip install -r requirements.txt", 
+      "run": "pytest sobo_assignment_test.py::test_task_b -v",
+      "points": 2,
+      "timeout": 10
+    },
+    {
+      "name": "3. Feature Importance Analysis",
+      "setup": "pip install -r requirements.txt",
+      "run": "pytest sobo_assignment_test.py::test_task_c -v",
+      "points": 2,
+      "timeout": 10
+    },
+    {
+      "name": "4. Model Validation",
+      "setup": "pip install -r requirements.txt",
+      "run": "pytest sobo_assignment_test.py::test_task_d -v",
+      "points": 2,
+      "timeout": 10
+    },
+    {
+      "name": "5. Stability Analysis",
+      "setup": "pip install -r requirements.txt",
+      "run": "pytest sobo_assignment_test.py::test_task_e -v",
+      "points": 2,
+      "timeout": 10
+    }
+  ]
+}
