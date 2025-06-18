@@ -11,7 +11,7 @@ import pytest
 
 @pytest.fixture(scope="session")
 def get_namespace():
-    script_fname = "sobo_asssignment_ans.py"
+    script_fname = "sobo_assignment_ans.py"
     script_content = open(script_fname).read()
 
     namespace = {}
