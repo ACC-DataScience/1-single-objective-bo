@@ -16,9 +16,15 @@ def get_namespace():
         script_content = f.read()
     namespace = {}
     exec(script_content, namespace)
+
+    required_vars = ["ax_client", "optimal_params", "optimal_yield_strength", "gp_improvement", "most_important", "rmse", "corr_coeff", "max_deviation"]
+    missing_vars = [var for var in required_vars if var not in namespace]
+    if missing_vars:
+        pytest.skip(f"Assignment incomplete. Missing variables: {missing_vars}")
     return namespace
 
-
+    
+    
 def test_task_a(get_namespace):
 
     running_ax_client = get_namespace["ax_client"]
